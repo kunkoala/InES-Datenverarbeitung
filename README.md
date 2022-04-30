@@ -1,10 +1,10 @@
 # InES-Datenverarbeitung
 BT-Lab .mpt to csv converter with loops.
 
-> Extra: The mpt to pandas dataframe can be used as well for other purposes such as plotting using 
+Extra: The mpt to pandas dataframe can be used as well for other purposes such as plotting using 
        matplotlib or seaborn with python.
 
-### HOW TO USE
+# HOW TO USE
 
 1. Place .py or .ipnyb script files in the same directory as the .mpt files you want to convert.
 
