@@ -53,38 +53,23 @@ def convertToPandasDF(mprfiles):
 # In[24]:
 
 
-def mpr_pandas():
-    files = searchmpr()
+def mpr_pandas(files):
     dfs = convertToPandasDF(files)
     return dfs
 
-
-# ## MPR to Pandas
-
-# In[21]:
-
-
-# TO USE: call function mpr_pandas and assign to variable
-
-dfs = mpr_pandas()
-
-
 # In[25]:
 
-
-# to access dataframe, type in dfs[index] with the chosen index
-# example:
-
-# dfs[1]
-
-
-# In[ ]:
-
-
-dfs[1]
-
-
-# In[ ]:
+def splitToLoops(df, indexToSplit):
+    dataframes = []
+    splits = int(len(df)/indexToSplit)
+    start = 0
+    end = indexToSplit
+    for split in range(splits):
+        temporary_df = df.iloc[start:end]
+        dataframes.append(temporary_df)
+        start += indexToSplit
+        end += indexToSplit
+    return dataframes
 
 
 
