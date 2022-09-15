@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[14]:
 
 
 from galvani import BioLogic
@@ -11,20 +11,19 @@ import os
 import re
 
 
-# In[2]:
+# In[15]:
 
 
 from galvani import BioLogic
-from read_mpr import searchmpr, mpr_pandas, splitToLoops
 
 
-# In[3]:
+# In[16]:
 
 
 regex = re.compile(r'\d+')
 
 
-# In[4]:
+# In[17]:
 
 
 def insertLoopColumn(df):
@@ -45,7 +44,7 @@ def insertLoopColumn(df):
     df.insert(len(df.columns), 'Loop', a)
 
 
-# In[5]:
+# In[18]:
 
 
 def insertCharge(df, filename):
@@ -54,7 +53,7 @@ def insertCharge(df, filename):
     df.insert(len(df.columns), 'C-Rate', charge)
 
 
-# In[6]:
+# In[19]:
 
 
 def batteryStatus(df, filename):  
@@ -65,7 +64,7 @@ def batteryStatus(df, filename):
         df.insert(len(df.columns), 'Stand', 1)
 
 
-# In[11]:
+# In[20]:
 
 
 def mergeDfs(dfs):
@@ -73,7 +72,7 @@ def mergeDfs(dfs):
     return merged
 
 
-# In[7]:
+# In[21]:
 
 
 def selectMeasureColumn(dfs):
@@ -83,7 +82,7 @@ def selectMeasureColumn(dfs):
     return df_selected
 
 
-# In[8]:
+# In[22]:
 
 
 def generateNewColumn(dfs, files):
@@ -95,7 +94,7 @@ def generateNewColumn(dfs, files):
     return df_newcol
 
 
-# In[12]:
+# In[23]:
 
 
 def generateNewColumnVar2(dfs, files):

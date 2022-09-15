@@ -1,63 +1,64 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[14]:
+# In[26]:
 
 
 # thanks to echemdata (https://github.com/echemdata/galvani) 
 # for source code of converting mpr files to python readable file.
 
 
-# In[15]:
+# In[45]:
 
 
 from galvani import BioLogic
+from galvani import MPRfile
 import pandas as pd
 import os
 
 
-# In[16]:
+# In[28]:
 
 
 # search mpr in current directory.
-def searchmpr():
+# can provide filepath and file contains some string
+# will use current path if filepath not explicitly given
+# will defaultly search for .mpr 
+def searchmpr(filepath=".", contains=""):
     files = []
-    for file in os.listdir("."):
-        if file.endswith(".mpr"): # take all the files that ends with .mpr format and append the file into the list
+    for file in os.listdir(filepath):
+        if file.endswith(".mpr") and contains in file: # take all the files that ends with .mpr format and append the file into the list
             files.append(file)
     return files # return list of files with .mpr format
 
 
-# In[23]:
+# In[56]:
 
 
-# convert mpr to pandas dataframe
-def convertToPandasDF(mprfiles):
-    # if only 1 file
-    if isinstance(mprfiles, str):
-        mpr_file = BioLogic.MPRfile(mprfiles)
-        df = pd.DataFrame(mpr_file.data)
-        return df
-    
-    # multiple files in a list
-    mpr_files = []
-    for file in mprfiles:
-        mpr_files.append(BioLogic.MPRfile(file))
-    
+# read mpr files in a directory
+# if unspecified, dir will be in the same as .py dir
+# example below
+
+def readMPR(mprfiles, MPRdirectory="."):
+    MPRfiles = []
+    for filename in mprfiles:
+        MPRfiles.append(BioLogic.MPRfile(MPRdirectory+"/"+filename))
+    return MPRfiles
+
+
+# In[50]:
+
+
+def convertToPandasDF(mpr_files_list):
     dataframes = []
-    for convertedMPR in mpr_files:
-        dataframes.append(pd.DataFrame(convertedMPR.data))
-    return dataframes
+    for mpr_file in mpr_files_list: 
+        if isinstance(mpr_file, MPRfile):
+            dataframes.append(pd.DataFrame(mpr_file.data))
+    return dataframes 
 
 
-# In[24]:
+# In[30]:
 
-
-def mpr_pandas(files):
-    dfs = convertToPandasDF(files)
-    return dfs
-
-# In[25]:
 
 def splitToLoops(df, indexToSplit):
     dataframes = []
@@ -70,6 +71,22 @@ def splitToLoops(df, indexToSplit):
         start += indexToSplit
         end += indexToSplit
     return dataframes
+
+# usage:
+# splitToLoops(dataframe, index)
+
+
+# In[64]:
+
+
+### all in one function ###
+
+def mpr_to_pandas(filenames, path):
+    df = convertToPandasDF(readMPR(filenames, path))
+    return df
+
+
+# In[ ]:
 
 
 
